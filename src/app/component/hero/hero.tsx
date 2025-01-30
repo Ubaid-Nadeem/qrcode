@@ -13,8 +13,6 @@ import {
 } from "@/components/ui/drawer";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";

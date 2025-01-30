@@ -9,8 +9,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { motion } from "framer-motion";
-import logo from "../../../../public/qr_logo-removebg-preview.png";
-import Image from "next/image";
 
 export default function Navbar() {
   const listItemVariant = {
