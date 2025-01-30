@@ -1,0 +1,12 @@
+.hero_bg {
+  background: linear-gradient(
+    270deg,
+    rgb(240, 240, 255) 0%,
+    rgb(255, 255, 255) 70%
+  );
+}
+
+.hero_child{
+    width: 850px;
+    max-width: 100%;
+}
