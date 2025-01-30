@@ -330,7 +330,7 @@ export default function Hero() {
             </Button>
           </div>
           <div className="w-full  md:w-[30%] rounded-lg bg-[#f7f7f7] order-first md:order-none">
-            <div className="bg-white w-[150px] m-auto rounded-lg p-5 my-5 ">
+            <div className="bg-white w-[150px] m-auto rounded-lg p-5 my-5 shadow-xl">
               <Image src={QR} alt="example QR" />
             </div>
             <Button

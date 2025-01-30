@@ -9,8 +9,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { motion } from "framer-motion";
+import { use } from "framer-motion/m";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const route = useRouter();
+
   const listItemVariant = {
     closed: {
       x: -10,
@@ -37,7 +41,6 @@ export default function Navbar() {
 
   return (
     <div className="fixed w-full flex justify-between border-b py-3 md:px-10 px-5 items-center bg-[white] top-0">
-
       {/* logo and navigation */}
 
       <div className="flex items-center gap-10">
@@ -54,7 +57,12 @@ export default function Navbar() {
         {/* login and register */}
 
         <div className="hidden md:block">
-          <button className="btn text-[#6c5ce7] border px-10 py-2 rounded-full mx-2 font-bold ">
+          <button
+            className="btn text-[#6c5ce7] border px-10 py-2 rounded-full mx-2 font-bold "
+            onClick={() => {
+              route.push("/login");
+            }}
+          >
             Log In
           </button>
           <button className="btn bg-[#6c5ce7] text-white border px-10 py-2 rounded-full font-bold">
