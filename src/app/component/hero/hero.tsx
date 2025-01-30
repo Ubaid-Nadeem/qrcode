@@ -25,9 +25,9 @@ export default function Hero() {
   const [selectedMethod, setSelectedMethod] = useState("Website");
   const [isActive, setIsActive] = useState(true);
   return (
-    <div className={`w-full h-screen ${styles.hero_bg} mt-20 p-5`}>
+    <div className={`w-full h-screen ${styles.hero_bg} mt-[61px] p-5`}>
       <div
-        className={`bg-[#e9e9eb] ${styles.hero_child} p-2 flex m-auto rounded-lg flex-col`}
+        className={`bg-[#e9e9eb] ${styles.hero_child} p-2 flex m-auto rounded-lg flex-col mt-10`}
       >
         <div className="p-3 w-full bg-white rounded-lg ">
           <ul className="flex gap-5 items-center w-full hidden md:flex">

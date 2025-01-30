@@ -36,7 +36,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="fixed w-full flex justify-between border-b py-5 md:px-10 px-5 items-center bg-[white] top-0">
+    <div className="fixed w-full flex justify-between border-b py-3 md:px-10 px-5 items-center bg-[white] top-0">
 
       {/* logo and navigation */}
 
