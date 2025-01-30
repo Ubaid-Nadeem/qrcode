@@ -11,21 +11,20 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import Image from "next/image";
 import QR from "../../../../public/example-qr.png";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Hero() {
   const [selectedMethod, setSelectedMethod] = useState("Website");
   const [isActive, setIsActive] = useState(true);
+  const [isError, setIsError] = useState(false);
+
   return (
-    <div className={`w-full h-screen ${styles.hero_bg} mt-[61px] p-5`}>
+    <div className={`w-full  ${styles.hero_bg} mt-[61px] p-5`}>
       <div
         className={`bg-[#e9e9eb] ${styles.hero_child} p-2 flex m-auto rounded-lg flex-col mt-10`}
       >
@@ -262,27 +261,85 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="bg-white w-full rounded-lg p-5 my-2 flex  flex-col md:flex-row  gap-2">
+        <div className="bg-white w-full rounded-lg p-5 mt-2 flex  flex-col md:flex-row  gap-2">
           <div className="bg-white w-full  md:w-[70%]  rounded-lg">
             <h2 className="font-bold text-[18px] pt-5">Complete the content</h2>
-            <span className="block text-[13px] mt-5 mb-2 text-[#68676c]">
-              Enter your Website
-            </span>
-            <input
-              placeholder="https://example.com"
-              className="w-[250px] p-2 md:w-[350px] border"
-            />
+            {selectedMethod == "Website" && (
+              <div>
+                <span className="block text-[13px] mt-5 mb-2 text-[#68676c]">
+                  Enter your Website <sup className="text-[red]">*</sup>
+                </span>
+                <input
+                  placeholder="E.g. https://example.com"
+                  className={`w-full p-2 md:w-[350px] border ${
+                    isError ? "outline-[red] border-[red]" : ""
+                  }`}
+                />
+                <p
+                  className={`text-[12px] py-2 text-[red] ${
+                    isError ? "block" : "hidden"
+                  }`}
+                >
+                  URL must start with http or https
+                </p>
+              </div>
+            )}
+
+            {selectedMethod == "Text" && (
+              <div>
+                <span className="block text-[13px] mt-5 mb-2 text-[#68676c]">
+                  Message <sup className="text-[red]">*</sup>
+                </span>
+                <Textarea
+                  placeholder="Type your message here."
+                  className="w-full md:w-[350px] p-2"
+                  rows={4}
+                />
+              </div>
+            )}
+
+            {selectedMethod == "Whatsapp" && (
+              <div>
+                <span className="block text-[13px] mt-5 mb-2 text-[#68676c]">
+                  Number<sup className="text-[red]">*</sup>
+                </span>
+                <input
+                  placeholder=""
+                  className="w-full p-2 md:w-[350px] border"
+                  type="number"
+                />
+
+                <div>
+                  <span className="block text-[13px] mt-5 mb-2 text-[#68676c]">
+                    Message <sup className="text-[red]">*</sup>
+                  </span>
+                  <Textarea
+                    placeholder="Type your message here."
+                    className="w-full md:w-[350px] p-2"
+                    rows={4}
+                  />
+                </div>
+              </div>
+            )}
+
             <Button
-              className="block bg-[#6c5ce7] text-white px-5 py-2 mt-5"
-              disabled={isActive}
+              className="block bg-[#6c5ce7] text-white px-10 py-2 m-auto my-5 md:w-auto md:m-0 md:my-5 rounded-full"
+              // disabled={isActive}
             >
-              Generate QR
+              Generate QR Code
             </Button>
           </div>
           <div className="w-full  md:w-[30%] rounded-lg bg-[#f7f7f7] order-first md:order-none">
             <div className="bg-white w-[150px] m-auto rounded-lg p-5 my-5 ">
               <Image src={QR} alt="example QR" />
             </div>
+            <Button
+              variant="outline"
+              className="block  text-[#6c5ce7] px-10 py-2 m-auto my-5 md:w-auto rounded-full"
+              disabled={isActive}
+            >
+              Download QR
+            </Button>
           </div>
         </div>
       </div>
