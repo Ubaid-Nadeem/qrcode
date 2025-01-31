@@ -17,22 +17,34 @@ import Image from "next/image";
 import QR from "../../../../public/example-qr.png";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
+import axios from "axios";
 export default function Hero() {
   const [selectedMethod, setSelectedMethod] = useState("Website");
   const [isActive, setIsActive] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [text, setText] = useState("");
+  const [qrUrl, setQrUrl] = useState(null);
+  const [urlText, setUrlText] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  const URI = process.env.NEXT_PUBLIC_URI;
+
+  function resetError() {
+    setErrMsg("");
+    setIsError(false);
+  }
 
   return (
     <div className={`w-full  ${styles.hero_bg} mt-[61px] p-5`}>
       <div
-        className={`bg-[#e9e9eb] ${styles.hero_child} p-2 flex m-auto rounded-lg flex-col mt-10`}
+        className={`bg-[#e9e9eb] ${styles.hero_child} p-2 flex m-auto rounded-lg flex-col my-10 mb-20`}
       >
         <div className="p-3 w-full bg-white rounded-lg ">
           <ul className="flex gap-5 items-center w-full hidden md:flex">
             <li
               onClick={() => {
                 setSelectedMethod("Website");
+                resetError();
               }}
               className={`${
                 selectedMethod == "Website"
@@ -62,6 +74,7 @@ export default function Hero() {
             <li
               onClick={() => {
                 setSelectedMethod("Text");
+                resetError();
               }}
               className={`${
                 selectedMethod == "Text"
@@ -93,6 +106,7 @@ export default function Hero() {
             <li
               onClick={() => {
                 setSelectedMethod("Whatsapp");
+                resetError();
               }}
               className={`${
                 selectedMethod == "Whatsapp"
@@ -149,6 +163,7 @@ export default function Hero() {
                         <li
                           onClick={() => {
                             setSelectedMethod("Website");
+                            resetError();
                           }}
                           className={`${
                             selectedMethod == "Website"
@@ -181,6 +196,7 @@ export default function Hero() {
                         <li
                           onClick={() => {
                             setSelectedMethod("Text");
+                            resetError();
                           }}
                           className={`${
                             selectedMethod == "Text"
@@ -215,6 +231,7 @@ export default function Hero() {
                         <li
                           onClick={() => {
                             setSelectedMethod("Whatsapp");
+                            resetError();
                           }}
                           className={`${
                             selectedMethod == "Whatsapp"
@@ -264,12 +281,21 @@ export default function Hero() {
         <div className="bg-white w-full rounded-lg p-5 mt-2 flex  flex-col md:flex-row  gap-2">
           <div className="bg-white w-full  md:w-[70%]  rounded-lg">
             <h2 className="font-bold text-[18px] pt-5">Complete the content</h2>
+
             {selectedMethod == "Website" && (
               <div>
                 <span className="block text-[13px] mt-5 mb-2 text-[#68676c]">
                   Enter your Website <sup className="text-[red]">*</sup>
                 </span>
                 <input
+                  value={urlText}
+                  onChange={(e) => {
+                    setUrlText(e.target.value);
+                    let filter = e.target.value.split(":");
+                    if (filter[0] == "https" || filter[0] == "http") {
+                      setIsError(false);
+                    }
+                  }}
                   placeholder="E.g. https://example.com"
                   className={`w-full p-2 md:w-[350px] border ${
                     isError ? "outline-[red] border-[red]" : ""
@@ -280,8 +306,36 @@ export default function Hero() {
                     isError ? "block" : "hidden"
                   }`}
                 >
-                  URL must start with http or https
+                  {errMsg}
                 </p>
+                <Button
+                  className="block bg-[#6c5ce7] text-white px-10 py-2 m-auto my-5 md:w-auto md:m-0 md:my-5 rounded-full"
+                  onClick={async () => {
+                    let filter = urlText.split(":");
+                    if (filter[0] == "https" || filter[0] == "http") {
+                      let isValid = urlText.split("//");
+                      if (isValid[1]) {
+                        try {
+                          let { data } = await axios.post(`${URI}/qrcode`, {
+                            data: urlText,
+                          });
+                          setQrUrl(data.qr);
+                          setUrlText("");
+                        } catch (e) {
+                          console.log(e);
+                        }
+                      } else {
+                        setErrMsg("URL must be valid");
+                        setIsError(true);
+                      }
+                    } else {
+                      setErrMsg("URL must start with http or https");
+                      setIsError(true);
+                    }
+                  }}
+                >
+                  Generate QR Code
+                </Button>
               </div>
             )}
 
@@ -291,10 +345,47 @@ export default function Hero() {
                   Message <sup className="text-[red]">*</sup>
                 </span>
                 <Textarea
+                  value={text}
+                  onChange={(e) => {
+                    setText(e.target.value);
+                    if (e.target.value) {
+                      setIsError(false);
+                      setErrMsg("");
+                    }
+                  }}
                   placeholder="Type your message here."
                   className="w-full md:w-[350px] p-2"
                   rows={4}
                 />
+                <p
+                  className={`text-[12px] py-2 text-[red] ${
+                    isError ? "block" : "hidden"
+                  }`}
+                >
+                  {errMsg}
+                </p>
+                <Button
+                  className="block bg-[#6c5ce7] text-white px-10 py-2 m-auto my-5 md:w-auto md:m-0 md:my-5 rounded-full"
+                  onClick={async () => {
+                    console.log(text);
+                    if (text) {
+                      try {
+                        let { data } = await axios.post(`${URI}/qrcode`, {
+                          data: text,
+                        });
+                        setQrUrl(data.qr);
+                        setText("");
+                      } catch (e) {
+                        console.log(e);
+                      }
+                    } else {
+                      setIsError(true);
+                      setErrMsg("Please enter a value");
+                    }
+                  }}
+                >
+                  Generate QR Code
+                </Button>
               </div>
             )}
 
@@ -319,26 +410,30 @@ export default function Hero() {
                     rows={4}
                   />
                 </div>
+                <Button className="block bg-[#6c5ce7] text-white px-10 py-2 m-auto my-5 md:w-auto md:m-0 md:my-5 rounded-full">
+                  Generate QR Code
+                </Button>
               </div>
             )}
-
-            <Button
-              className="block bg-[#6c5ce7] text-white px-10 py-2 m-auto my-5 md:w-auto md:m-0 md:my-5 rounded-full"
-              // disabled={isActive}
-            >
-              Generate QR Code
-            </Button>
           </div>
           <div className="w-full  md:w-[30%] rounded-lg bg-[#f7f7f7] order-first md:order-none">
             <div className="bg-white w-[150px] m-auto rounded-lg p-5 my-5 shadow-xl">
-              <Image src={QR} alt="example QR" />
+              <Image
+                src={qrUrl ? qrUrl : QR}
+                alt="example QR"
+                width={150}
+                height={150}
+              />
             </div>
             <Button
               variant="outline"
               className="block  text-[#6c5ce7] px-10 py-2 m-auto my-5 md:w-auto rounded-full"
-              disabled={isActive}
+              disabled={qrUrl ? false : true}
             >
-              Download QR
+              <a href={qrUrl ? qrUrl : ""} download={"qrcode"}>
+                {" "}
+                Download QR
+              </a>
             </Button>
           </div>
         </div>

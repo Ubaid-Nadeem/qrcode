@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import loginCover from "../../../public/login.svg";
 import Image from "next/image";
@@ -6,9 +6,7 @@ import styles from "./style.module.css";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
-
-const route = useRouter()
-
+  const route = useRouter();
 
   return (
     <div className="flex w-full h-screen">
@@ -93,9 +91,12 @@ const route = useRouter()
           </button>
           <p className="text-[14px] text-gray-600">
             Don't have an account{" "}
-            <span className="text-[blue] cursor-pointer" onClick={()=>{
-              route.push("/register")
-            }}>
+            <span
+              className="text-[blue] cursor-pointer"
+              onClick={() => {
+                route.push("/register");
+              }}
+            >
               {" "}
               Create an account
             </span>
