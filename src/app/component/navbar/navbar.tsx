@@ -47,8 +47,14 @@ export default function Navbar() {
       <div className="flex items-center gap-10">
         <div className="font-bold text-[24px] text-[#6c5ce7]">LOGO</div>
         <ul className="gap-10 md:flex hidden ">
-          <li className="cursor-pointer hover:text-[#6c5ce7]">Home</li>
-          <li className="cursor-pointer  hover:text-[#6c5ce7]">QR Code</li>
+          <li
+            className="cursor-pointer  hover:text-[#6c5ce7]"
+            onClick={() => {
+              route.push("/");
+            }}
+          >
+            QR Code
+          </li>
           <li
             className="cursor-pointer  hover:text-[#6c5ce7]"
             onClick={() => {
@@ -58,8 +64,14 @@ export default function Navbar() {
             Scanner
           </li>
 
-          <li className="cursor-pointer  hover:text-[#6c5ce7]">Blogs</li>
-          <li className="cursor-pointer  hover:text-[#6c5ce7]">About</li>
+          <li
+            className="cursor-pointer  hover:text-[#6c5ce7]"
+            onClick={() => {
+              route.push("/faq");
+            }}
+          >
+            FAQs
+          </li>
         </ul>
       </div>
 
@@ -120,12 +132,9 @@ export default function Navbar() {
                     <motion.li
                       variants={listItemVariant}
                       className="py-5 border-b"
-                    >
-                      <SheetClose>Home</SheetClose>
-                    </motion.li>
-                    <motion.li
-                      variants={listItemVariant}
-                      className="py-5 border-b"
+                      onClick={() => {
+                        route.push("/");
+                      }}
                     >
                       <SheetClose> QR Code</SheetClose>
                     </motion.li>
@@ -138,14 +147,15 @@ export default function Navbar() {
                     >
                       <SheetClose>Scanner</SheetClose>
                     </motion.li>
+                   
                     <motion.li
                       variants={listItemVariant}
-                      className="py-5 border-b"
+                      className="py-5"
+                      onClick={() => {
+                        route.push("/faq");
+                      }}
                     >
-                      <SheetClose>Blogs</SheetClose>
-                    </motion.li>
-                    <motion.li variants={listItemVariant} className="py-5">
-                      <SheetClose>About</SheetClose>
+                      <SheetClose>FAQs</SheetClose>
                     </motion.li>
                   </motion.ul>
 
