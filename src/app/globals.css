@@ -12,24 +12,30 @@ img {
   margin: auto;
 }
 #html5-qrcode-anchor-scan-type-change {
-  padding: 10px;
-  background-color: black;
-  color: white;
+  padding: 15px;
+  /* background-color: black; */
+  color:  black;
   cursor: pointer;
+  border-radius: 0% !important;
   text-decoration: none !important;
   padding: 5px;
-  margin: 20px;
+  /* margin-top: 10px; */
+  margin: 20px !important;
   border-radius:5px;
+  font-size: 14px;
   
 }
 
 #html5-qrcode-button-camera-permission {
-  background-color: blue;
+  background-color: #6c5ce7;
   color: white;
   text-decoration: none !important;
+  border-radius: 0% !important;
+
   padding: 5px;
   margin: 20px;
   border-radius: 5px;
+  font-size: 14px;
 
 }
 

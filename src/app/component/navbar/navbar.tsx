@@ -7,6 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+  SheetClose,
 } from "@/components/ui/sheet";
 import { motion } from "framer-motion";
 import { use } from "framer-motion/m";
@@ -48,6 +49,15 @@ export default function Navbar() {
         <ul className="gap-10 md:flex hidden ">
           <li className="cursor-pointer hover:text-[#6c5ce7]">Home</li>
           <li className="cursor-pointer  hover:text-[#6c5ce7]">QR Code</li>
+          <li
+            className="cursor-pointer  hover:text-[#6c5ce7]"
+            onClick={() => {
+              route.push("/scanner");
+            }}
+          >
+            Scanner
+          </li>
+
           <li className="cursor-pointer  hover:text-[#6c5ce7]">Blogs</li>
           <li className="cursor-pointer  hover:text-[#6c5ce7]">About</li>
         </ul>
@@ -111,31 +121,45 @@ export default function Navbar() {
                       variants={listItemVariant}
                       className="py-5 border-b"
                     >
-                      Home
+                      <SheetClose>Home</SheetClose>
                     </motion.li>
                     <motion.li
                       variants={listItemVariant}
                       className="py-5 border-b"
                     >
-                      QR Code
+                      <SheetClose> QR Code</SheetClose>
+                    </motion.li>
+                    <motion.li
+                      variants={listItemVariant}
+                      className="py-5 border-b"
+                      onClick={() => {
+                        route.push("/scanner");
+                      }}
+                    >
+                      <SheetClose>Scanner</SheetClose>
                     </motion.li>
                     <motion.li
                       variants={listItemVariant}
                       className="py-5 border-b"
                     >
-                      Blogs
+                      <SheetClose>Blogs</SheetClose>
                     </motion.li>
                     <motion.li variants={listItemVariant} className="py-5">
-                      About
+                      <SheetClose>About</SheetClose>
                     </motion.li>
                   </motion.ul>
 
                   <div className="block md:hidden flex absolute bottom-10 w-[85%]">
-                    <button className="btn text-[#6c5ce7] border px-10 py-4 rounded-full mx-2 flex-1 font-bold">
-                      Log In
+                    <button
+                      className="btn text-[#6c5ce7] border px-10 py-4 rounded-full mx-2 flex-1 font-bold"
+                      onClick={() => {
+                        route.push("/login");
+                      }}
+                    >
+                      <SheetClose>Log In</SheetClose>
                     </button>
                     <button className="btn bg-[#6c5ce7] text-white border px-10 py-2 rounded-full flex-1 font-bold">
-                      Register
+                      <SheetClose>Register</SheetClose>
                     </button>
                   </div>
                 </SheetDescription>
